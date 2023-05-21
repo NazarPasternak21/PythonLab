@@ -1,8 +1,8 @@
-from Models.Laptop import Laptop
-from Models.GamingLaptop import GamingLaptop
-from Models.OfficeLaptop import OfficeLaptop
-from Models.StudentLaptop import StudentLaptop
-from Models.Ultrabook import Ultrabook
+from Models.laptop import Laptop
+from Models.gaming_laptop import GamingLaptop
+from Models.office_laptop import OfficeLaptop
+from Models.student_laptop import StudentLaptop
+from Models.ultrabook import Ultrabook
 
 
 class AbstractLaptopManager:
