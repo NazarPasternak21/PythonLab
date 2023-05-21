@@ -1,4 +1,4 @@
-from Models.Laptop import Laptop
+from Models.laptop import Laptop
 
 
 class StudentLaptop(Laptop):
