@@ -5,7 +5,8 @@ various methods for managing and retrieving laptop information.
 """
 # pylint: disable=import-error
 
-from decorators.decorators import method_call_logger, pylint_checker
+from decorators.decorators import method_call_logger, logger
+from decorators.decorators import pylint_checker
 from models.abstract_laptop import AbstractLaptop
 from models.gaming_laptop import GamingLaptop
 from models.office_laptop import OfficeLaptop
@@ -16,6 +17,7 @@ from managers.set_manager import SetManager
 
 # pylint: disable=too-few-public-methods
 @method_call_logger
+@logger(Exception, mode="file")
 class AbstractLaptopManager:
     """Class for managing laptops."""
 
@@ -101,6 +103,7 @@ class AbstractLaptopManager:
         """
         return list(enumerate(self.laptops))
 
+
     @method_call_logger
     def get_zip_with_method_result(self, method_name):
         """Get a zip of laptops with the result of a specified method.
@@ -161,7 +164,7 @@ class AbstractLaptopManager:
 if __name__ == '__main__':
     laptop_manager = AbstractLaptopManager()
 
-    gaming_laptop = GamingLaptop("Asus", 17.6, 32, 1024, 10, 100, "NVIDIA RTX 3080", 2)
+    gaming_laptop = GamingLaptop("Asus", 17.6, 32, 1024, 10, 100, "NVIDIA RTX 3080", 2, 100)
     ultrabook = Ultrabook("Asus", 15.6, 16, 512, 5, 100, 1.8, 1.7)
     office_laptop = OfficeLaptop("Lenovo", 17.3, 16, 256, 6, 100, "Black", 25000)
     student_laptop = StudentLaptop("Acer", 17.3, 32, 1024, 12, 100, "Intel Core i7", "China")
