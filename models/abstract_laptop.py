@@ -2,7 +2,7 @@
 This module defines a Laptop class that
 represents a laptop with various specifications and functionalities.
 """
-from decorators.decorators import logged
+from decorators.decorators import logger
 from exceptions.exceptions import RedundantChargeException
 
 
@@ -13,7 +13,7 @@ class AbstractLaptop:
 
     # pylint: disable= too-many-arguments
     def __init__(self, model="Unknown", screen_size=15.6, ram=8,
-                 storage=256, battery_life=5, battery_level=100):
+                 storage=256, battery_life=5, battery_level=100, charge=100):
         """
         Initializes the AbstractLaptop object.
 
@@ -32,6 +32,7 @@ class AbstractLaptop:
         self.battery_life = battery_life
         self.battery_level = battery_level
         self.optimal_processor_temperature = set()
+        self.charge = charge
 
     def upgrade_ram(self, value):
         """
@@ -51,15 +52,13 @@ class AbstractLaptop:
         """
         self.storage += value
 
-    @logged(RedundantChargeException, 'console')
+    @logger(RedundantChargeException, mode="console")
     def charge(self):
-        """Charge the laptop's battery."""
-        if self.battery_level == 100:
-            raise RedundantChargeException("Battery level is already at 100%")
+        """Set the battery level of the laptop to 100."""
+        if self.battery_life == 100:
+            raise RedundantChargeException()
         else:
-            print("Charging the battery...")
             self.battery_level = 100
-            print("Battery is fully charged.")
 
     def replace_battery(self, capacity_in_hours):
         """
