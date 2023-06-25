@@ -1,3 +1,7 @@
 class RedundantChargeException(Exception):
-    """Exception raised when trying to charge a laptop with 100% battery level."""
-    pass
+
+    def __int__(self, message):
+        self.message = message
+
+    def __str__(self):
+        return "Battery level 100%"
