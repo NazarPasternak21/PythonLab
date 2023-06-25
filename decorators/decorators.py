@@ -46,40 +46,25 @@ def pylint_checker(func):
     return wrapper
 
 
-def logged(exception, mode):
-    """Parameterized decorator that logs exceptions in the specified mode (console or file).
+def logger(exception, mode):
+    logger = logging.getLogger("my_logger")
+    logger.setLevel(logging.ERROR)
 
-    Args:
-        exception (Exception): The exception to catch and log.
-        mode (str): The mode to log exceptions, either 'console' or 'file'.
+    if mode == "console":
+        console_handler = logging.StreamHandler()
+        logger.addHandler(console_handler)
+    elif mode == "file":
+        file_handler = logging.FileHandler("logs.log")
+        logger.addHandler(file_handler)
+    else:
+        raise ValueError("No matching mode")
 
-    Returns:
-        function: The decorator.
-
-    Raises:
-        ValueError: If an invalid mode is provided.
-    """
-
-    def decorator(func):
-        """Decorator function that wraps the decorated function and logs exceptions."""
-
+    def decorator(input_func):
         def wrapper(*args, **kwargs):
-            """Wrapper function that catches and logs exceptions."""
             try:
-                return func(*args, **kwargs)
+                return input_func(*args, **kwargs)
             except exception as e:
-                logger = logging.getLogger('exception_logger')
-                logger.setLevel(logging.DEBUG)
-                if mode == 'console':
-                    handler = logging.StreamHandler()
-                elif mode == 'file':
-                    handler = logging.FileHandler('exception.log')
-                else:
-                    raise ValueError(f"Invalid mode: {mode}. Valid modes are 'console' and 'file'.")
-                formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
-                handler.setFormatter(formatter)
-                logger.addHandler(handler)
-                logger.exception(str(e))
+                logger.error(str(e))
 
         return wrapper
 
